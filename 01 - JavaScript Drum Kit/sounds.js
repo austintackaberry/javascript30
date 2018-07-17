@@ -9,6 +9,14 @@ let dataObj = Array.prototype.reduce.call(
     },
     {}
 );
+document.querySelectorAll("div").forEach(div1 => {
+    console.log(div1);
+});
+
+console.log(audioList);
+audioList.forEach(audio => {
+    console.log(audio);
+});
 
 Array.prototype.forEach.call(audioList, audio => {
     dataObj[audio.dataset.key].audio = audio;
