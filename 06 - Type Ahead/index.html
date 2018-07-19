@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+
+    fetch(endpoint).then((res) => res.json()).then((bigList) => {
+      const searchInput = document.getElementsByClassName('search')[0]
+      searchInput.addEventListener('input', filterBigList)
+      function filterBigList(event) {
+        const suggestions = document.getElementsByClassName("suggestions")[0]
+        const form = document.getElementsByClassName("search-form")[0]
+        let newSuggestions = form.insertBefore(suggestions.cloneNode(), suggestions)
+        suggestions.remove()
+        if (event.target.value) {
+
+          bigList.forEach((word) => {
+            const newText = word.city + ", " + word.state
+            const i = newText.indexOf(event.target.value)
+            const lenInput = event.target.value.length;
+            if (i !== -1) {
+              const node = document.createElement("LI");
+              const div = document.createElement("div")
+
+              const textnode1 = document.createTextNode(newText.slice(0, i));        // Create a text node
+              div.appendChild(textnode1);
+
+              let spanNode = document.createElement("span")
+              spanNode.style.backgroundColor = "yellow"
+              const textnode2 = document.createTextNode(newText.slice(i, i + lenInput));
+              spanNode.appendChild(textnode2)
+              div.appendChild(spanNode)
+
+              const textnode3 = document.createTextNode(newText.slice(i + lenInput));        // Create a text node
+              div.appendChild(textnode3);
+              node.appendChild(div)
+
+              let popNode = document.createElement("div").appendChild(document.createTextNode(word.population))
+              node.appendChild(popNode)
+              newSuggestions.appendChild(node);     // Append <li> to <ul> with id="myList"
+            }
+          })
+        }
+      }
+    })
+
+
+
+  </script>
+</body>
+
+</html>
