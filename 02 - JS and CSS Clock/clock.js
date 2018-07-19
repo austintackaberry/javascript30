@@ -11,7 +11,6 @@ const clockSetter = () => {
     mins = mins > 60 ? mins - 60 : mins;
     hours = hours > 24 ? hours - 12 : hours;
     hours = hours > 12 ? hours - 12 : hours;
-
     secondHand.style.transform = `rotate(${seconds / 60}turn)`;
     minHand.style.transform = `rotate(${mins / 60}turn)`;
     hourHand.style.transform = `rotate(${hours / 12}turn)`;
